@@ -29,9 +29,24 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+class Task{
+  String name;
+  bool isCompleted;
 
+  Task({required this.name, this.isCompleted = false});
+}
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController taskController = TextEditingController();
+  final List<Task> tasks = [];
+
+  void addTask(){
+    setState(() {
+      if (taskController.text.isNotEmpty){
+        tasks.add(Task(name: taskController.text));
+        taskController.clear();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +68,21 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const SizedBox(width: 20),
-            ElevatedButton(onPressed: (){
-              }, 
+            ElevatedButton(onPressed: addTask,
             child: const Text('Add'),
                ),
              ],
            ),
+           Expanded(child: ListView.builder(itemCount: tasks.length,
+           itemBuilder: (context, index) {
+            final task = tasks[index];
+            return ListTile(title: Text(task.name),
+            );
+           },)
+           )
           ],
-        ),)
+        ),
+      )
     );
   }
 }
