@@ -97,8 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 taskCompletion(task);
             },
             ),
-            trailing: IconButton(onPressed: () => removeTask(task), icon: const Icon(Icons.delete)
-            ),
+            trailing: TextButton(onPressed: () => removeTask(task), child: const Text('Delete', style: TextStyle(color: Colors.red),))
+            
             );
            },)
            )
