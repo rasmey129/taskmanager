@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController taskController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +40,27 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Row(children: [
+              Expanded(child: TextField(
+                controller: taskController,
+                decoration: const InputDecoration(
+                  labelText: 'Task Name',
+                ),
+              ),
+            ),
+            const SizedBox(width: 20),
+            ElevatedButton(onPressed: (){
+              }, 
+            child: const Text('Add'),
+               ),
+             ],
+           ),
           ],
-        ),
-      ), 
+        ),)
     );
   }
 }
