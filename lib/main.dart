@@ -48,6 +48,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void taskCompletion(Task task){
+    setState(() {
+      task.isCompleted = !task.isCompleted;
+    });
+  }
+
+  void removeTask(Task task){
+    setState(() {
+      tasks.remove(task);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +88,17 @@ class _MyHomePageState extends State<MyHomePage> {
            Expanded(child: ListView.builder(itemCount: tasks.length,
            itemBuilder: (context, index) {
             final task = tasks[index];
-            return ListTile(title: Text(task.name),
+            return ListTile(title: Text(task.name, style: TextStyle(
+              decoration: task.isCompleted ? TextDecoration.lineThrough: null,
+            ),),
+            leading: Checkbox(
+              value: task.isCompleted,
+              onChanged: (bool? value){
+                taskCompletion(task);
+            },
+            ),
+            trailing: IconButton(onPressed: () => removeTask(task), icon: const Icon(Icons.delete)
+            ),
             );
            },)
            )
