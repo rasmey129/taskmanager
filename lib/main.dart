@@ -23,13 +23,13 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-class Task{
+
+class Task{ //class for the task list
   String name;
   bool isCompleted;
 
@@ -37,9 +37,9 @@ class Task{
 }
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController taskController = TextEditingController();
-  final List<Task> tasks = [];
+  final List<Task> tasks = []; //list for the task
 
-  void addTask(){
+  void addTask(){ //add function 
     setState(() {
       if (taskController.text.isNotEmpty){
         tasks.add(Task(name: taskController.text));
@@ -49,13 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void taskCompletion(Task task){
-    setState(() {
+    setState(() { //function to check off the task 
       task.isCompleted = !task.isCompleted;
     });
   }
 
   void removeTask(Task task){
-    setState(() {
+    setState(() { //function to delete the task
       tasks.remove(task);
     });
   }
@@ -71,8 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
-            Row(children: [
-              Expanded(child: TextField(
+            Row(children: [ 
+              Expanded(child: TextField( //textfield for the task input
                 controller: taskController,
                 decoration: const InputDecoration(
                   labelText: 'Task Name',
@@ -80,25 +80,29 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const SizedBox(width: 20),
-            ElevatedButton(onPressed: addTask,
-            child: const Text('Add'),
+            ElevatedButton(onPressed: addTask, //add task button 
+            child: const Text('Add'), 
                ),
              ],
            ),
            Expanded(child: ListView.builder(itemCount: tasks.length,
-           itemBuilder: (context, index) {
+           itemBuilder: (context, index) { //list builder to display the task as each of its own element
             final task = tasks[index];
-            return ListTile(title: Text(task.name, style: TextStyle(
+            return ListTile(title: Text(
+              task.name, style: TextStyle(
               decoration: task.isCompleted ? TextDecoration.lineThrough: null,
-            ),),
+              ),
+            ),
             leading: Checkbox(
               value: task.isCompleted,
-              onChanged: (bool? value){
+              onChanged: (bool? value){ //check box for the complete and check
                 taskCompletion(task);
-            },
+              },
             ),
-            trailing: TextButton(onPressed: () => removeTask(task), child: const Text('Delete', style: TextStyle(color: Colors.red),))
-            
+            trailing: TextButton(
+              onPressed: () => removeTask(task), //delete button 
+               child: const Text('Delete', 
+               style: TextStyle(color: Colors.red),))   
             );
            },)
            )
